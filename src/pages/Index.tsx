@@ -1,7 +1,10 @@
 
 import { useState } from "react";
 import InsultDisplay from "../components/InsultDisplay";
-import InsultManager from "../components/InsultManager";
+import AdminPanel from "../components/AdminPanel";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Settings } from "lucide-react";
 
 const Index = () => {
   const [insultos, setInsultos] = useState<string[]>([
@@ -47,6 +50,37 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 p-6">
+      {/* Botón de admin en la esquina superior izquierda */}
+      <div className="absolute top-6 left-6 z-10">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-white/90 backdrop-blur-sm hover:bg-white shadow-lg"
+            >
+              <Settings className="h-4 w-4 mr-2" />
+              Admin
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[400px] sm:w-[540px]">
+            <SheetHeader>
+              <SheetTitle>Panel de Administración</SheetTitle>
+            </SheetHeader>
+            <div className="mt-6">
+              <AdminPanel
+                insultos={insultos}
+                onAgregar={agregarInsulto}
+                onEliminar={eliminarInsulto}
+                isAdmin={isAdmin}
+                onAdminChange={setIsAdmin}
+                onVerifyAdmin={verificarAdmin}
+              />
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">
@@ -54,22 +88,12 @@ const Index = () => {
           </h1>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div className="space-y-6">
+        {/* Contenido centrado */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
             <InsultDisplay 
               insulto={insultoActual}
               onGenerar={generarInsultoAleatorio}
-            />
-          </div>
-          
-          <div>
-            <InsultManager
-              insultos={insultos}
-              onAgregar={agregarInsulto}
-              onEliminar={eliminarInsulto}
-              isAdmin={isAdmin}
-              onAdminChange={setIsAdmin}
-              onVerifyAdmin={verificarAdmin}
             />
           </div>
         </div>
