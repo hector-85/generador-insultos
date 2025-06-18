@@ -18,6 +18,7 @@ const Index = () => {
   ]);
 
   const [insultoActual, setInsultoActual] = useState<string>("");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const generarInsultoAleatorio = () => {
     if (insultos.length === 0) {
@@ -40,6 +41,10 @@ const Index = () => {
     setInsultos(nuevosInsultos);
   };
 
+  const verificarAdmin = (password: string) => {
+    return password === "admin123";
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 p-6">
       <div className="max-w-4xl mx-auto">
@@ -47,9 +52,6 @@ const Index = () => {
           <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">
             🎭 Generador de Insultos
           </h1>
-          <p className="text-xl text-white/90 drop-shadow">
-            ¡Genera insultos creativos y personaliza tu colección!
-          </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -65,6 +67,9 @@ const Index = () => {
               insultos={insultos}
               onAgregar={agregarInsulto}
               onEliminar={eliminarInsulto}
+              isAdmin={isAdmin}
+              onAdminChange={setIsAdmin}
+              onVerifyAdmin={verificarAdmin}
             />
           </div>
         </div>
